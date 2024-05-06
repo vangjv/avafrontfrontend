@@ -2,7 +2,7 @@
   "name": "ava-front-ui",
   "version": "0.0.0",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=20.11.1"
   },
   "scripts": {
     "ng": "ng",

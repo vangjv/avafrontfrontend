@@ -26,12 +26,12 @@ export class SalesComponent implements OnInit, OnDestroy {
   speakText:string = "Hi there. How are you? I'm fine.";
   microsoftQueue: any[] = [];
   loadingText:string = "Loading...";
-  buttonText:string = "Start Conversation";
+  buttonText:string = "Start Pitch";
   listening:boolean = false;
   thinking:boolean = false;
-  drawerOpen:boolean = false;
+  pitching:boolean = false;
   subscriptions = new Subscription();
-  imageUrl:string = "https://avafrontpublic.blob.core.windows.net/public/bangkok-spring-rolls.webp";
+  imageUrl:string = "../assets/images/avafrontlogo.png";
   constructor(private speechRecognitionService:SpeechRecognitionService, private speechTokenService:SpeechTokenService,
     private avaFrontAPIService: AvaFrontAPIService) {
   }
@@ -46,53 +46,84 @@ export class SalesComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  closeDrawer() {
-    this.drawerOpen = false;
-  }
-
   click(){
-    if (this.buttonText == "Listening") {
+    if (this.buttonText == "Stop") {
       this.speechRecognitionService.stopRecognition();
-      this.listening = false;
+      this.pitching = false;
       this.head.stopSpeaking();
       this.head.start();
-      this.buttonText = "Start Conversation";
+      this.buttonText = "Start Pitch";
     } else {
-      this.startRecognition();
-      this.listening = true;
-      this.buttonText = "Listening";
+      this.startSpeaking();
+      this.buttonText = "Stop";
     }
   }
 
-  async startRecognition() {
-    console.log("Start recognition");
-    // await this.head.playAnimation('../assets/thinking2.fbx',null,20);
-    await this.speechRecognitionService.startRecognition();
+  async startSpeaking() {
+    console.log("Start pitch");
+    this.microsoftSpeak(`
 
-    //on recognition
-    this.subscriptions.add(
-    this.speechRecognitionService.recognizedWords$.pipe(skip(1)).subscribe(async(recognizedWords) => {
-      await this.head.playPose('../assets/thinking2.fbx',null,20);
-      this.thinking = true;
-      this.avaFrontAPIService.restaurantConversation(recognizedWords).subscribe((response) => {
-        this.thinking = false;
-        this.avaFrontAPIService.conversationId = response.conversationId;
-        console.log("response from openAI:", response.message);
-        this.head.stopAnimation();
-        this.microsoftSpeak(response.message);
-      });
-    }));
+    Did you know that 88% of online consumers are less likely to return to a site after a bad experience? That could mean tens of thousands of dollars in lost sales annually. Don't let a complicated or unresponsive website be a barrier between your business and your customers.
 
-    this.subscriptions.add(
-    this.speechRecognitionService.wordsBeingRecognized$.subscribe((wordsBeingRecognized) => {
-      console.log("isSpeaking:", this.head.isSpeaking);
-      console.log("isAudioPlaying:", this.head.isAudioPlaying);
-      if (this.head.isSpeaking == true && wordsBeingRecognized.indexOf("stop") > -1) {
-        console.log("Initiate stop speaking");
-        this.head.stopSpeaking();
-        this.head.start();
-      }
-    }));
+    Enter AvaFront, the next-gen AI avatar agent, here to revolutionize your customer interactions and take your business to new heights.
+
+    Here's the Problem: Losing Sales Due to Complicated or Overwhelming User Interfaces
+    •	Did you know that 57% of consumers abandon purchases due to website usability issues.
+    •	79% of customers expect companies to respond to their inquiries in under 24 hours.
+    •	Over 70% of website visitors are frustrated by the lack of real-time customer support.
+
+    We've got a Solution: AvaFront’s AI-Powered Avatar Agents
+    AvaFront is here to ensure you never miss another lead or sale by offering an intuitive, human-like interaction platform that seamlessly guides customers through their journey.
+
+    Here are a number of key Benefits and Services AvaFront Offers:
+    1.	24/7 Customer Support:
+    •	Answering inquiries and solving problems round the clock.
+    •	Did you know that 63% of consumers are more likely to return to a website with live chat support.
+    2.	Sales Support and Lead Generation:
+    •	Qualify leads and boost conversions through tailored product recommendations.
+    •	68% of salespeople say lead quality is their top challenge.
+    3.	Personalized Conversations and Appointment Management:
+    •	Recognizing returning customers and adapting conversations based on their preferences.
+    •	52% of customers expect personalized offers, while 49% will switch brands due to poor personalization.
+    4.	Multilingual Support and CRM Integration:
+    •	Serving a global audience in multiple languages.
+    •	Seamless integration with existing CRM systems ensures a unified customer experience.
+    5.	Virtual Front Desk Augmentation:
+    •	Enhancing your existing staff by handling overflow inquiries and peak-hour traffic.
+    6.	Custom Avatar Design and Analytics:
+    •	Tailoring the avatar to your brand identity.
+    •	Generating actionable insights through customer interaction analytics.
+
+    Numbers speak loud.  Here are some statistics That Matter:
+    •	Did you know that 53% of customers leave a brand they love after a single poor experience.
+    •	72% of customers share positive experiences with six or more people.
+    •	A 5% increase in customer retention can result in a profit increase of up to 95%.
+
+    Let us help you elevate Your Brand with AvaFront:
+    •	We can help you scale your front desk services and grow your business without limits.
+    •	We can help you cut customer service costs by up to 30% while boosting satisfaction.
+    •	We can customize the avatar for you to fully align AvaFront with your brand's unique personality and voice.
+
+     Don't just keep up with the competition, outpace them. Revolutionize your customer interactions with AvaFront and create a loyal customer base that returns for more.
+
+     Contact us today to see how AvaFront can transform your customer experience.
+
+    `);
+    setTimeout(() => {
+      this.pitching = true;
+    }, 19000);
+    setTimeout(() => {
+      this.imageUrl = "../assets/images/slide1.jpg";
+    }, 27000);
+    setTimeout(() => {
+      this.imageUrl = "../assets/images/slide2.jpg";
+    }, 50000);
+    setTimeout(() => {
+      this.imageUrl = "../assets/images/slide3.jpg";
+    }, 60000);
+    setTimeout(() => {
+      this.imageUrl = "../assets/images/slide4.jpg";
+    }, 130000);
   }
 
 

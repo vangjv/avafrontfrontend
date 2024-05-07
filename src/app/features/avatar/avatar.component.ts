@@ -88,7 +88,7 @@ export class AvatarComponent implements OnInit, OnDestroy {
               this.microsoftSpeak("Alright! Sit tight. I'll redirect you to the restaurant demo!");
               setTimeout(() => {
                 this.router.navigate(['/restaurant']);
-              }, 7000);
+              }, 6000);
             } else if (response.action == "NAVIGATETOAUTHENTICATION") {
               this.thinking = false;
               //clear conversationId
@@ -97,7 +97,7 @@ export class AvatarComponent implements OnInit, OnDestroy {
               this.microsoftSpeak("Got it! I'll redirect you to the authentication demo!");
               setTimeout(() => {
                 this.router.navigate(['/authentication']);
-              }, 7000);
+              }, 6000);
             } else if (response.action == "NAVIGATETOSALES") {
               this.thinking = false;
               //clear conversationId
@@ -106,7 +106,7 @@ export class AvatarComponent implements OnInit, OnDestroy {
               this.microsoftSpeak("Okay!, You're on your way to the sales demo!");
               setTimeout(() => {
                 this.router.navigate(['/sales']);
-              }, 7000);
+              }, 6000);
             }
           } else {
             this.thinking = false;
